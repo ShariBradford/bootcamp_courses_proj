@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Comments</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Course</h1>
+        <p>
+            <span class="label">Name:</span>
+            <span>{{ name }}</span>
+        </p>
+        <p>
+            <span class="label">Description:</span>
+            <span>{{ desc }}</span>
+        </p>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {%  endfor %}
+        </ul>
+        {% endif %}
+        
+        <form action="/courses/{{ course.id }}/comments/add" method="POST">
+            {% csrf_token %}
+            <p>
+                <span>
+                    <label for="course-comment">Comment</label>
+                    <textarea name="content" id="course-comment"></textarea>
+                </span>
+            </p>
+            <div>
+                <button type="submit">Add</button>
+            </div>
+        </form>
+
+        <h1>Comments</h1>
+        {% for comment in comments %}
+        <p class="comment">{{ comment.content }}</p>
+        {% endfor %}
+
+    </div>    
+</body>
+</html>

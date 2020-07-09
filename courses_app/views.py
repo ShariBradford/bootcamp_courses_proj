@@ -40,3 +40,25 @@ def delete_course(request,course_id):
         this_description.delete()
         this_course.delete()
     return redirect('/')
+
+def show_comments(request,course_id):
+    context = {
+        "course":  Course.objects.get(id=course_id),
+        "comments": Comment.objects.filter(course_id = course_id),
+    }
+    return render(request,'comments.html', context)
+
+def add_comment(request,course_id):
+    errors = Comment.objects.basic_validator(request.POST)
+    if errors: 
+        for k,v in errors.items():
+            messages.error(request,v)
+        return redirect(f"courses/{course_id}/comments")
+        
+    else:
+        Comment.objects.create(
+            course=Course.objects.get(id=course_id),
+            content=request.POST["content"], 
+        )
+        return redirect(f"courses/{course_id}/comments")
+

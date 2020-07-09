@@ -50,6 +50,7 @@
                     <td>{{ course.created_at|date:"F j, Y" }}</td>
                     <td>
                         <ul class="actions">
+                            <li><a href="courses/{{ course.id }}/comments">Comment</a></li>
                             <li><a href="courses/destroy/{{ course.id }}">Remove</a></li>
                         </ul>
                     </td>

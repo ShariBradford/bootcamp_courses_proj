@@ -32,13 +32,12 @@ class CourseManager(models.Manager):
         elif len(self.filter(name__iexact = postData['name'])) > 0:
             errors['name'] = "Course name must be unique."
 
-        if postData['desc']:
-            #send the description field from the form to the Description validator
-            descriptionErrors = Description.objects.basic_validator(postData)
-            if descriptionErrors:
-                #if the Description validator returned any errors, qdd them to our errors object
-                for k,v in descriptionErrors.items():
-                    errors[k] = v
+        #send the description field from the form to the Description validator
+        descriptionErrors = Description.objects.basic_validator(postData)
+        if descriptionErrors:
+            #if the Description validator returned any errors, qdd them to our errors object
+            for k,v in descriptionErrors.items():
+                errors[k] = v
 
         return errors
 

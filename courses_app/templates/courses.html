@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootcamp Courses</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Add a New Course</h1>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {%  endfor %}
+        </ul>
+        {% endif %}
+
+        <form action="create" method="POST">
+            {% csrf_token %}
+            <p>
+                <span>
+                    <label for="course-name">Name</label>
+                    <input type="text" name="name" id="course-name">
+                </span>
+            </p>
+            <p>
+                <span>
+                    <label for="course-description">Description</label>
+                    <textarea name="desc" id="course-description"></textarea>
+                </span>
+            </p>
+            <div><button>Add</button></div>
+        </form>
+
+        <h1>Courses</h1>
+        <table>
+            <tr>
+                <th>Course Name</th>
+                <th>Description</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+            </tr>
+            {% for course in courses %}
+                <tr>
+                    <td>{{ course.name }}</td>
+                    <td>{% if course.desc.desc %} {{ course.desc.desc }} {% endif %}</td>
+                    <td>{{ course.created_at|date:"F j, Y" }}</td>
+                    <td>
+                        <ul class="actions">
+                            <li><a href="courses/destroy/{{ course.id }}">Remove</a></li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+    </div>    
+</body>
+</html>

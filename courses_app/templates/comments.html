@@ -9,14 +9,15 @@
 </head>
 <body>
     <div class="container">
+        <a href="/" class="go-back">Go Back</a>
         <h1>Course</h1>
         <p>
             <span class="label">Name:</span>
-            <span>{{ name }}</span>
+            <span>{{ course.name }}</span>
         </p>
         <p>
             <span class="label">Description:</span>
-            <span>{{ desc }}</span>
+            <span>{{ course.desc.desc }}</span>
         </p>
 
         {% if messages %}
@@ -35,6 +36,7 @@
                     <textarea name="content" id="course-comment"></textarea>
                 </span>
             </p>
+            <input type="hidden" name="course" value="{{ course.id }}"> 
             <div>
                 <button type="submit">Add</button>
             </div>

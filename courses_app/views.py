@@ -43,8 +43,8 @@ def delete_course(request,course_id):
 
 def show_comments(request,course_id):
     context = {
-        "course":  Course.objects.get(id=course_id),
-        "comments": Comment.objects.filter(course_id = course_id),
+        "course":  Course.objects.get(id = course_id),
+        "comments": Comment.objects.filter(course = course_id),
     }
     return render(request,'comments.html', context)
 
@@ -53,12 +53,12 @@ def add_comment(request,course_id):
     if errors: 
         for k,v in errors.items():
             messages.error(request,v)
-        return redirect(f"courses/{course_id}/comments")
+        return redirect("../comments")
         
     else:
         Comment.objects.create(
             course=Course.objects.get(id=course_id),
             content=request.POST["content"], 
         )
-        return redirect(f"courses/{course_id}/comments")
+        return redirect("../comments")
 

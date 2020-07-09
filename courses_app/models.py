@@ -9,7 +9,7 @@ class DescriptionManager(models.Manager):
         if not postData['desc']:
             errors['desc'] = "Course description is required."
         elif len(postData['desc']) <= 15:
-            errors['desc'] = "Course name should be at least 15 characters."
+            errors['desc'] = "Course description should be at least 15 characters."
 
         return errors
 
